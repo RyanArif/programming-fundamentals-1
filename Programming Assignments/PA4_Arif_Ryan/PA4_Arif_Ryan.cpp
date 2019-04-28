@@ -25,8 +25,9 @@ void displayMax(string months[], double rain[], int maxMonths);
 void displayMin(string months[], double rain[]);
 void displayRainfallTable(string months[], double rain[], int maxMonths);
 void bubbleSort(double rain[], string months[], int maxMonths);
-void swap(double &a, double &b);
-int getLongestNameLength(string months[], int maxMonths);
+void swapDoubles(double &a, double &b);
+void swapStrings(string &a, string &b);
+int getLongestMonthLength(string months[], int maxMonths);
 void linuxFriendlyPause();
 
 int main()
@@ -88,55 +89,56 @@ void loadTotalRainfall(double rain[], string fileName, int maxMonths)
 	inFile.close();
 
 	//Test
-
+	/*
 	for (int i = 0; i < maxMonths; i++) {
 		cout << rain[i] << " ";
 		cout << endl;
 	} 
-
+	*/
 }
 
 //calculate and display the average rainfall for the entire year.
 void displayAverage(string months[], double rain[], int maxMonths)
 {
 	double average;	//average rainfall for the year
-	int total;		//total of the rainfall for the year
+	double total = 0;		//total of the rainfall for the year
 	
     //get the total amount of rain over the year
 	for (int i = 0; i < maxMonths; i++) {
 		total += rain[i];
     }
 	//calculate the average rainfall
-	average = static_cast<double>(total) / maxMonths;
+	average = total / static_cast<double>(maxMonths);
     //display the average
+	cout << setprecision(3);
 	cout << "Average Rainfall: " << average << " inches" << endl;
 }
 
 //display the maximum value of the stinky boy
 void displayMax(string months[], double rain[], int maxMonths)
 {
-    cout << "Maximum Rainfall: " << months[maxMonths - 1] + " " + rain[maxMonths - 1] << " inches." << endl;
+    cout << "Maximum Rainfall: " << months[maxMonths - 1] + " " << rain[maxMonths - 1] << " inches." << endl;
 }
 
 //display the minimum value of the stinky boy
 void displayMin(string months[], double rain[])
 {
-    cout << "Minimum Rainfall: " << months[0] + " " + rain[0] << " inches." << endl;
+    cout << "Minimum Rainfall: " << months[0] + " " << rain[0] << " inches." << endl;
 }
 
 void displayRainfallTable(string months[], double rain[], int maxMonths)
 {
-	int firstColumnWidth = 8;	//width of 1st column
+	int firstColumnWidth = getLongestMonthLength(months, maxMonths);	//width of 1st column
 	int secondColumnWidth = 10;	//width of 2nd column
 
-	int maxLength = getLongestMonthLength(months[maxMonths], maxMonths);
+	int maxLength = getLongestMonthLength(months, maxMonths);
 
     //display the table
-	cout << setprecision(2) << fixed << showpoint;
+	cout << setprecision(3) << fixed << showpoint;
     cout << "\n\nTotal Rainfall (Sorted in Descending Order)\n\n";
     cout << setw(firstColumnWidth) << left << "Month"
-        << setw(secondColumnWidth) << right << "Rain (inches)" << endl;
-    for (int i = 1; i <= maxMonths, i++){
+        << setw(secondColumnWidth) << right << "Inches" << endl;
+	for (int i = 1; i <= maxMonths; i++) {
         cout << setw(firstColumnWidth) << left << months[maxMonths - i]
             << setw(secondColumnWidth) << right << rain[maxMonths - i] << endl;
     }
@@ -149,7 +151,7 @@ void bubbleSort(double rain[], string months[], int maxMonths)
 	bool didSwap;			//did we do a swap(?)
 	
 	//go thru each element from size - 1 to element 1
-	for (int i = maxMonths - 1; i < 0; i--)
+	for (int i = maxMonths - 1; i > 0; i--)
 	{
 		didSwap = false;	//assume no swaps
 
@@ -158,8 +160,8 @@ void bubbleSort(double rain[], string months[], int maxMonths)
 		{
 			if (rain[j] > rain[j + 1])
 			{
-				swap(rain[j], rain[j + 1]);
-                swap(months[j], months[j + 1])
+				swapDoubles(rain[j], rain[j + 1]);
+				swapStrings(months[j], months[j + 1]);
 				didSwap = true;
 			}
 		}//end of inner loop
@@ -168,12 +170,21 @@ void bubbleSort(double rain[], string months[], int maxMonths)
 }
 
 //swap the values a and b
-void swap(int & a, int & b)
+void swapDoubles(double &a, double &b)
 {
-	int temp;	//temporary holding cell
+	double temp;	//temporary holding cell
 	temp = a;	//put a in a temp
 	a = b;		//a has now become b
-	b = temp    //done
+	b = temp;    //done
+}
+
+//swap the values a and b
+void swapStrings(string &a, string &b)
+{
+	string temp;	//temporary holding cell
+	temp = a;	//put a in a temp
+	a = b;		//a has now become b
+	b = temp;    //done
 }
 
 
