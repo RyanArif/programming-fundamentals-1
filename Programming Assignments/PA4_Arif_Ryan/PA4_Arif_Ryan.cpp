@@ -1,9 +1,9 @@
 /******************************
    Ryan Arif
-   4/13/2019
-   PA3_Arif_Ryan.cpp
-   Takes a list of names & grades from a file, then processes them to display
-	 the average, min/max grade in both numerical and letter grade
+   4/27/2019
+   PA4_Arif_Ryan.cpp
+   Take a list of rainfall from a file, sort them, and display information about them
+   to the user.
 ********************************/
 
 // Headers
@@ -100,7 +100,7 @@ void loadTotalRainfall(double rain[], string fileName, int maxMonths)
 //calculate and display the average rainfall for the entire year.
 void displayAverage(string months[], double rain[], int maxMonths)
 {
-	double average;	//average rainfall for the year
+	double average;			//average rainfall for the year
 	double total = 0;		//total of the rainfall for the year
 	
     //get the total amount of rain over the year
@@ -110,7 +110,7 @@ void displayAverage(string months[], double rain[], int maxMonths)
 	//calculate the average rainfall
 	average = total / static_cast<double>(maxMonths);
     //display the average
-	cout << setprecision(3);
+	cout << setprecision(2) << fixed << showpoint;
 	cout << "Average Rainfall: " << average << " inches" << endl;
 }
 
@@ -129,12 +129,10 @@ void displayMin(string months[], double rain[])
 void displayRainfallTable(string months[], double rain[], int maxMonths)
 {
 	int firstColumnWidth = getLongestMonthLength(months, maxMonths);	//width of 1st column
-	int secondColumnWidth = 10;	//width of 2nd column
-
-	int maxLength = getLongestMonthLength(months, maxMonths);
+	int secondColumnWidth = 10;											//width of 2nd column
 
     //display the table
-	cout << setprecision(3) << fixed << showpoint;
+	cout << setprecision(2) << fixed << showpoint;
     cout << "\n\nTotal Rainfall (Sorted in Descending Order)\n\n";
     cout << setw(firstColumnWidth) << left << "Month"
         << setw(secondColumnWidth) << right << "Inches" << endl;
@@ -191,11 +189,11 @@ void swapStrings(string &a, string &b)
 //find the longest length of a string in an array of string
 int getLongestMonthLength(string months[], int maxMonths)
 {
-	//well, you can't have a name less than 0 characters long
+	//well, you can't have a month less than 0 characters long
 	//so this will work, 100% of the time, and saves one entire array access
 	int longestMonthLength = months[0].length();
 	for (int i = 0; i < maxMonths; i++){
-		//compare the current longest name to a new challenger, then change it if necessary
+		//compare the current longest month to a new challenger, then change it if necessary
 		//uhhhh..... idk man, the length of this array element was a long unsigned int
 		//stop it. You don't need to be long, or unsigned. >:(
 		if (longestMonthLength < static_cast<int>(months[i].length())){
@@ -205,13 +203,7 @@ int getLongestMonthLength(string months[], int maxMonths)
 	return longestMonthLength;
 }
 
-/***********************************************************
-linux friendly way of doing SYSTEM("PAUSE")
-pauses the terminal until the user presses enter.
-PARAM:	none.
-PRE:	your code compiles
-POST:	your program pauses
-************************************************************/
+//system puase, but you have to press enter instead of that ANY key
 void linuxFriendlyPause()
 {
 	cout << "Press ENTER to continue";
